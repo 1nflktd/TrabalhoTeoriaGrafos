@@ -2,6 +2,8 @@
 
 #include "Program.hpp"
 #include "GraphGeneratorFile.hpp"
+#include "algorithms/Algorithm.hpp"
+#include "algorithms/Isomorphism.hpp"
 //#include "GraphGeneratorConsole.hpp"
 
 void Program::run()
@@ -62,7 +64,8 @@ void Program::runInner(Option option)
 		}
 		else
 		{
-			std::cout << "Opção inválida! Digite novamente.\n";
+			std::cout << "Opção inválida! Digite novamente." << std::endl;
+			exit = true;
 		}
 	}
 }
@@ -91,9 +94,6 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 {
 	if (optionInner == ReadFrom::File)
 	{
-		// criar grafo
-		// ler grafo do arquivo
-		// mandar grafo para algoritmo
 		std::string fileGraph1;
 		if (option == Option::A) 
 		{
@@ -105,6 +105,8 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 			
 			GraphGeneratorFile graphGenerator2{fileGraph2};
 			Graph graph2{graphGenerator2.getGraph()};
+
+			Isomorphism algorithm{graph1, graph2};
 		}
 		else
 		{
@@ -114,10 +116,6 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 	}
 	else if (optionInner == ReadFrom::Console)
 	{
-		// criar grafo
-		// ler grafo do console
-		// mandar grafo para algoritmo
-		//GraphGenerator graphGenerator{ReadFrom::Console};
 
 	}
 	else

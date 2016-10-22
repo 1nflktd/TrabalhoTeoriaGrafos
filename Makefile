@@ -1,2 +1,2 @@
 main:
-	g++ src/*.cpp -o trabalho -Wall -std=c++14
+	g++ src/*.cpp src/algorithms/*.cpp -o trabalho -Wall -std=c++14

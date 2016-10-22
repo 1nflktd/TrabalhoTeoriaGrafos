@@ -18,8 +18,9 @@ public:
 	Graph() : valued(false), directed(false), vertices(0) {}
 	void initialize(int _vertices, int _valued, int _directed);
 	void addEdge(int vertex, int adjacentVertex, int weight);
-	inline bool getValued() { return this->valued; }
-	inline int getVertices() { return this->vertices; }
+	inline bool getValued() const { return this->valued; }
+	inline int getVertices() const { return this->vertices; }
+	inline int operator()(int row, int colunm) const { return this->matrix[row][colunm]; }
 };
 
 #endif
