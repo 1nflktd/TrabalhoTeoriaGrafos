@@ -5,11 +5,12 @@
 
 class GraphGenerator
 {
-	Graph graph;
 	virtual void read() = 0;
+protected:
+	Graph graph;
 public:
 	GraphGenerator() {}
-	inline Graph generateGraph() const { return this->graph; }
+	inline Graph getGraph() const { return this->graph; }
 };
 
 #endif

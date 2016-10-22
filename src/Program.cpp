@@ -99,7 +99,7 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 		{
 			std::cin >> fileGraph1 >> fileGraph2;
 			GraphGeneratorFile graphGenerator1{fileGraph1};
-			Graph graph1{graphGenerator1.generateGraph()};
+			Graph graph1{graphGenerator1.getGraph()};
 		}
 		else
 		{
