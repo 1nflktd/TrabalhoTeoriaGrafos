@@ -19,6 +19,7 @@ public:
 	void initialize(int _vertices, int _valued, int _directed);
 	void addEdge(int vertex, int adjacentVertex, int weight);
 	inline bool getValued() { return this->valued; }
+	inline int getVertices() { return this->vertices; }
 };
 
 #endif
