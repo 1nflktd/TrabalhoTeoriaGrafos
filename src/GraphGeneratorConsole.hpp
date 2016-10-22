@@ -6,8 +6,6 @@
 class GraphGeneratorConsole : public GraphGenerator
 {
 	virtual void read();
-public:
-	GraphGeneratorConsole() : GraphGenerator() {}
 };
 
 #endif

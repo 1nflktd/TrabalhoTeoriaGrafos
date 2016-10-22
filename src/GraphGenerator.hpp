@@ -11,6 +11,7 @@ protected:
 public:
 	GraphGenerator() {}
 	inline Graph getGraph() const { return this->graph; }
+	virtual ~GraphGenerator() {}
 };
 
 #endif

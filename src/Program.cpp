@@ -94,12 +94,17 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 		// criar grafo
 		// ler grafo do arquivo
 		// mandar grafo para algoritmo
-		std::string fileGraph1, fileGraph2;
+		std::string fileGraph1;
 		if (option == Option::A) 
 		{
+			std::string fileGraph2;
 			std::cin >> fileGraph1 >> fileGraph2;
+
 			GraphGeneratorFile graphGenerator1{fileGraph1};
 			Graph graph1{graphGenerator1.getGraph()};
+			
+			GraphGeneratorFile graphGenerator2{fileGraph2};
+			Graph graph2{graphGenerator2.getGraph()};
 		}
 		else
 		{
