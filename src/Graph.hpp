@@ -16,11 +16,9 @@ class Graph
 	AdjacencyList adjacencyList;
 public:
 	Graph() : valued(false), directed(false), vertices(0) {}
-	Graph(int _vertices);
-	void initialize(int _vertices);
-	inline void setValued(int _valued) { this->valued = _valued; }
-	inline void setDirected(int _directed) { this->directed = _directed; }
+	void initialize(int _vertices, int _valued, int _directed);
 	void addEdge(int vertex, int adjacentVertex, int weight);
+	inline bool getValued() { return this->valued; }
 };
 
 #endif

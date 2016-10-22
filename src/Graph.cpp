@@ -1,13 +1,10 @@
 #include "Graph.hpp"
 
-Graph::Graph(int _vertices) : valued(false), directed(false), vertices(0)
-{
-	this->initialize(_vertices);
-}
-
-void Graph::initialize(int _vertices)
+void Graph::initialize(int _vertices, int _valued, int _directed)
 {
 	this->vertices = _vertices;
+	this->valued = _valued;
+	this->directed = _directed;
 	this->matrix = Matrix(_vertices + 1, std::vector<int>(-1, _vertices + 1)); // initial vertex is 1, not 0...
 	this->adjacencyList = AdjacencyList(_vertices + 1);
 }

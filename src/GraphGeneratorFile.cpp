@@ -10,41 +10,24 @@ void GraphGeneratorFile::read()
 	int vertices;
 	infile >> valued >> vertices;
 
-	this->graph.initialize(vertices);
+	this->graph.initialize(vertices, valued == 'V', false);
 
-	if (valued == 'V')
+	int vertex = 1;
+	std::string line;
+	while(std::getline(infile, line))
 	{
-		int vertex = 1;
-		std::string line;
-		while(std::getline(infile, line))
+		std::istringstream iss(line);
+		int n_adjacentVertices;
+		iss >> n_adjacentVertices;
+		for(int i = 0; i < n_adjacentVertices; ++i)
 		{
-			std::istringstream iss(line);
-			int n_adjacentVertices;
-			iss >> n_adjacentVertices;
-			for(int i = 0; i < n_adjacentVertices; ++i)
-			{
-				int adjacentVertice, weight;
-				iss >> adjacentVertice >> weight;
-				this->graph.addEdge(vertex, adjacentVertice, weight);
-			}
-			++vertex;
-		}
-	}
-	else
-	{
-		int vertex = 1;
-		std::string line;
-		while(std::getline(infile, line))
-		{
-			std::istringstream iss(line);
-			int n_adjacentVertices;
-			iss >> n_adjacentVertices;
-			for(int i = 0; i < n_adjacentVertices; ++i)
-			{
-				int adjacentVertice;
-				iss >> adjacentVertice;
-				this->graph.addEdge(vertex, adjacentVertice, 1);
-			}
+			int adjacentVertice, weight = 1;
+			iss >> adjacentVertice;
+			
+			if (this->graph.getValued()) 
+				iss >> weight;
+
+			this->graph.addEdge(vertex, adjacentVertice, weight);
 			++vertex;
 		}
 	}
