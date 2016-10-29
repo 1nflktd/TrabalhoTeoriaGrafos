@@ -10,7 +10,7 @@ class GraphGeneratorFile : public GraphGenerator
 	std::string file;
 	virtual void read();
 public:
-	GraphGeneratorFile(const std::string & _file) : file(_file) {}
+	GraphGeneratorFile(const std::string & _file) : file(_file) { this->read(); }
 };
 
 #endif

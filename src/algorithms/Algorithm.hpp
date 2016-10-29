@@ -4,8 +4,8 @@
 #include <string>
 #include "../Graph.hpp"
 
-//namespace algorithms
-//{
+namespace algorithms
+{
 	class Algorithm
 	{
 	protected:
@@ -17,6 +17,6 @@
 		Algorithm(const Graph & _graph) : graph(_graph) {}
 		virtual ~Algorithm() {}
 	};
-//}
+}
 
 #endif

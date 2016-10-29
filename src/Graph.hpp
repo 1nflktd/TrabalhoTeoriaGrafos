@@ -21,6 +21,7 @@ public:
 	inline bool getValued() const { return this->valued; }
 	inline int getVertices() const { return this->vertices; }
 	inline int operator()(int row, int colunm) const { return this->matrix[row][colunm]; }
+	void printGraphMatrix();
 };
 
 #endif

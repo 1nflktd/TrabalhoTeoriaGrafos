@@ -106,7 +106,7 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 			GraphGeneratorFile graphGenerator2{fileGraph2};
 			Graph graph2{graphGenerator2.getGraph()};
 
-			Isomorphism algorithm{graph1, graph2};
+			algorithms::Isomorphism algorithm{graph1, graph2};
 		}
 		else
 		{
