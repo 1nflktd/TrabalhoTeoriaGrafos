@@ -18,14 +18,15 @@ void algorithms::DFS::DFSinit()
 {
 	std::vector<int> vVisited(this->graph.getVertices(), -1);
 	int time = 0;
+	int nConnectedComponents = 0;
 	for (int u = 0, count = this->graph.getVertices(); u < count; ++u)
 	{
 		if (vVisited[u] == -1)
 		{
-			this->DFSvisit(u, vVisited, time);
+			this->DFSvisit(u, vVisited, time, nConnectedComponents++);
 		}
 	}
-
+	this->graph.setNConnectedComponents(nConnectedComponents);
 	for (int i = 0, count = vVisited.size(); i < count; ++i)
 	{
 		std::stringstream stream;
@@ -34,15 +35,16 @@ void algorithms::DFS::DFSinit()
 	}
 }
 
-void algorithms::DFS::DFSvisit(int u, std::vector<int> & vVisited, int & time)
+void algorithms::DFS::DFSvisit(int u, std::vector<int> & vVisited, int & time, int nConnectedComponents)
 {
 	++time;
 	vVisited[u] = time;
+	this->graph.addConnectedComponents(nConnectedComponents, u);
 	for (int v = 0, count = this->graph.getVertices(); v < count; ++v)
 	{
 		if (this->graph(u, v) > 0 && vVisited[v] == -1)
 		{
-			DFSvisit(v, vVisited, time);
+			DFSvisit(v, vVisited, time, nConnectedComponents);
 		}
 	}
 }

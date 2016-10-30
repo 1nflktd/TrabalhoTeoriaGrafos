@@ -16,6 +16,8 @@ namespace algorithms
 	public:
 		Algorithm(const Graph & _graph) : graph(_graph) {}
 		virtual ~Algorithm() {}
+		inline void setGraph(const Graph & _graph) { this->graph = _graph; }
+		inline Graph getGraph() const { return this->graph; }
 	};
 }
 

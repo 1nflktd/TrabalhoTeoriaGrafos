@@ -10,15 +10,17 @@ void Graph::initialize(int _vertices, int _valued, int _directed)
 	this->directed = _directed;
 	this->matrix = Matrix(_vertices, std::vector<int>(_vertices, -1)); // initial vertex is 1, not 0...
 	this->adjacencyList = AdjacencyList(_vertices);
+	this->connectedComponents = AdjacencyList(_vertices); // if every connected component is degree 1
+	this->nConnectedComponents = _vertices;
 }
 
 void Graph::addEdge(int vertex, int adjacentVertex, int weight)
 {
-	if (vertex < 0 || vertex > this->vertices) 
+	if (vertex < 0 || vertex >= this->vertices) 
 	{
 		return; // throw error
 	}
-	if (adjacentVertex < 0 || adjacentVertex > this->vertices) 
+	if (adjacentVertex < 0 || adjacentVertex >= this->vertices) 
 	{
 		return; // throw error
 	}
@@ -41,4 +43,18 @@ void Graph::printGraphMatrix()
 		}
 		std::cout << "\n";
 	}
+}
+
+void Graph::addConnectedComponents(int connectedComponent, int vertex)
+{
+	if (connectedComponent < 0 || connectedComponent >= this->nConnectedComponents) 
+	{
+		return; // throw error
+	}
+	if (vertex < 0 || vertex >= this->vertices) 
+	{
+		return; // throw error
+	}
+
+	this->connectedComponents[connectedComponent].push_back(vertex);
 }

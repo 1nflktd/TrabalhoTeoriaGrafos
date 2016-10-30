@@ -9,7 +9,7 @@ namespace algorithms
 	{
 		int initialVertex;
 		void DFSinit();
-		void DFSvisit(int, std::vector<int> &, int &);
+		void DFSvisit(int, std::vector<int> &, int &, int);
 	public:
 		DFS(const Graph & _graph1, int _initialVertex) : Algorithm(_graph1), initialVertex(_initialVertex) {}
 		virtual void run();
