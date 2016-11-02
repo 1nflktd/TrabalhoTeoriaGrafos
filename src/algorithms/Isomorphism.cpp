@@ -29,7 +29,7 @@ bool algorithms::Isomorphism::check(const Graph & graph1, const Graph & graph2, 
 void algorithms::Isomorphism::generateAllPermutations()
 {
     std::vector<int> v(this->graph.getVertices());
-    std::iota(v.begin(), v.end(), 0); // 1, 2, 3, up to N
+    std::iota(v.begin(), v.end(), 0); // 0, 1, 2, 3, up to N
     bool found = false;
     do
     {
@@ -46,8 +46,9 @@ void algorithms::Isomorphism::generateAllPermutations()
     }
 }
 
-void algorithms::Isomorphism::addPermutationResult(const std::vector<int> & map)
+void algorithms::Isomorphism::addPermutationResult(std::vector<int> map)
 {
+    std::transform(map.begin(), map.end(), map.begin(), [](int a) { return a + 1; }); // print vertex from 1 .. to N, not 0
 	std::stringstream result;
 	std::copy(map.begin(), map.end(), std::ostream_iterator<int>(result, " "));
 	this->result += "Mapeamento correto: " + result.str() + "\n";

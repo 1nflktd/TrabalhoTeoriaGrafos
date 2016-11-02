@@ -30,7 +30,7 @@ void algorithms::DFS::DFSinit()
 	for (int i = 0, count = vVisited.size(); i < count; ++i)
 	{
 		std::stringstream stream;
-		stream << "vertice " << i << " ordem de visitacao " << vVisited[i] << "\n";
+		stream << "Vertice " << (i + 1) << ". Ordem de visitacao: " << vVisited[i] << "\n";
 		this->result += stream.str();
 	}
 }

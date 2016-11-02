@@ -45,7 +45,7 @@ void algorithms::BFS::BFSinit()
 	for (int i = 0, count = vLevel.size(); i < count; ++i)
 	{
 		std::stringstream stream;
-		stream << i << " " << vLevel[i] << "\n";
+		stream << "Vertice " << (i + 1) << ". Ordem de visitacao: " << vLevel[i] << "\n";
 		this->result += stream.str();
 	}
 }

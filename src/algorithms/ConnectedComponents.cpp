@@ -11,14 +11,14 @@ void algorithms::ConnectedComponents::run()
 	this->setGraph(dfs.getGraph());
 	int nConnectedComponents = this->graph.getNConnectedComponents();
 	std::stringstream stream;
-	stream << "Numero de componentes conexos " << nConnectedComponents << "\n";
+	stream << "Numero de componentes conexos: " << nConnectedComponents << "\n";
 	for (int i = 0; i < nConnectedComponents; ++i)
 	{
-		stream << "Componente: " << i << "\n";
+		stream << "Componente: " << (i + 1) << "\n";
 		stream << "Vertices: " << "\n";
 		for (const auto & v : this->graph.getConnectedComponents(i))
 		{
-			stream << v << " ";
+			stream << (v + 1) << " ";
 		}
 		stream << "\n";			
 	}

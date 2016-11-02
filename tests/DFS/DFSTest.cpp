@@ -9,7 +9,7 @@ int main()
 	std::cout << "graph1\n";
 	g1.getGraph().printGraphMatrix();
 
-	algorithms::DFS dfs{g1.getGraph(), 0};
+	algorithms::DFS dfs{g1.getGraph(), 1};
 
 	dfs.run();
 	dfs.showResults();

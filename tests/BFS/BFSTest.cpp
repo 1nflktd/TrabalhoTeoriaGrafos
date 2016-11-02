@@ -9,7 +9,8 @@ int main()
 	std::cout << "graph1\n";
 	g1.getGraph().printGraphMatrix();
 
-	algorithms::BFS bfs{g1.getGraph(), 0};
+	int initialVertex = 1; // read from console
+	algorithms::BFS bfs{g1.getGraph(), --initialVertex};
 
 	bfs.run();
 	bfs.showResults();

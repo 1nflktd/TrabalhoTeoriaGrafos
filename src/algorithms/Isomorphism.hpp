@@ -10,7 +10,7 @@ namespace algorithms
 		Graph graph2;
 		bool check(const Graph &, const Graph &, const std::vector<int> &);
 		void generateAllPermutations();
-		void addPermutationResult(const std::vector<int> &);
+		void addPermutationResult(std::vector<int>);
 	public:
 		Isomorphism(const Graph & _graph1, const Graph & _graph2) : Algorithm(_graph1), graph2(_graph2) {}
 		virtual void run();

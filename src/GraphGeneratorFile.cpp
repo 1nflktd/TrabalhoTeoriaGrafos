@@ -30,7 +30,7 @@ void GraphGeneratorFile::read()
 			if (this->graph.getValued()) 
 				iss >> weight;
 
-			this->graph.addEdge(vertex, adjacentVertice, weight);
+			this->graph.addEdge(vertex, --adjacentVertice, weight);
 		}
 		++vertex;
 	}
