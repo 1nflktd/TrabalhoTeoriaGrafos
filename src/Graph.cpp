@@ -12,6 +12,8 @@ void Graph::initialize(int _vertices, int _valued, int _directed)
 	this->adjacencyList = AdjacencyList(_vertices);
 	this->connectedComponents = AdjacencyList(_vertices); // if every connected component is degree 1
 	this->nConnectedComponents = _vertices;
+	this->biconnectedComponents = Edges(_vertices); // if every connected component is degree 1
+	this->nBiconnectedComponents = _vertices;
 }
 
 void Graph::addEdge(int vertex, int adjacentVertex, int weight)
@@ -45,7 +47,7 @@ void Graph::printGraphMatrix()
 	}
 }
 
-void Graph::addConnectedComponents(int connectedComponent, int vertex)
+void Graph::addConnectedComponent(int connectedComponent, int vertex)
 {
 	if (connectedComponent < 0 || connectedComponent >= this->nConnectedComponents) 
 	{
@@ -57,4 +59,14 @@ void Graph::addConnectedComponents(int connectedComponent, int vertex)
 	}
 
 	this->connectedComponents[connectedComponent].push_back(vertex);
+}
+
+void Graph::addBiconnectedComponent(int biconnectedComponent, const std::pair<int, int> & edge)
+{
+	if (biconnectedComponent < 0 || biconnectedComponent >= this->nBiconnectedComponents)
+	{
+		return; // throw error
+	}
+
+	this->biconnectedComponents[biconnectedComponent].push_back(edge);
 }

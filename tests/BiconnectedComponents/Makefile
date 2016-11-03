@@ -1,4 +1,4 @@
-SRC_FILES := $(wildcard ../../src/*.cpp ../../src/algorithms/*.cpp DFSTest.cpp)
+SRC_FILES := $(wildcard ../../src/*.cpp ../../src/algorithms/*.cpp BiconnectedComponentsTest.cpp)
 SRC_FILES := $(filter-out ../../src/main.cpp, $(SRC_FILES))
 
 main:
