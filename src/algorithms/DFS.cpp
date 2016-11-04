@@ -20,7 +20,7 @@ void algorithms::DFS::DFSinit()
 	std::vector<int> visited(this->graph.getVertices(), -1);
 	std::vector<int> low(this->graph.getVertices(), -1);
 	std::vector<int> parent(this->graph.getVertices(), -1);
-	std::list<std::pair<int, int>> stack(this->graph.getVertices()); // edges
+	std::list<std::pair<int, int>> stack; // edges
 	int time = 0;
 	int nConnectedComponents = 0;
 	int nBiconnectedComponents = 0;
