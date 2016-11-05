@@ -30,6 +30,5 @@ void GraphGeneratorConsole::read()
 
 			this->graph.addEdge(vertex, --adjacentVertice, weight);
 		}
-		++vertex;
 	}	
 }
