@@ -11,7 +11,7 @@ void GraphGeneratorFile::read()
 	int vertices;
 	infile >> valued >> vertices;
 	
-	this->graph.initialize(vertices, valued == 'V', false);
+	this->graph.initialize(vertices, valued == 'V', true);
 
 	int vertex = 0;
 	std::string line;
