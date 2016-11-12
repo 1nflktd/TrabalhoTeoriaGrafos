@@ -28,10 +28,11 @@ void Program::run()
 
 void Program::showInitialMenu() const
 {
-	const int maxWidth = 100;
 	const std::map<Option, std::string> descriptionOption {
 		{ Option::A , "Identificacao de isomorfismo entre dois grafos" },
 		{ Option::B , "Busca em amplitude e profundidade" },
+		{ Option::C , "Componentes conexas" },
+		{ Option::D , "Componentes biconexas" },
 		{ Option::Quit , "Sair" }
 	};
 	std::cout 
@@ -74,21 +75,20 @@ void Program::runInner(Option option)
 
 void Program::showInnerMenu(Option option) const
 {
-	std::cout << "|-----------------------------------------------------|\n";
+	std::cout << "|" << std::setfill('-') << std::setw(maxWidth) << "" << "|\n";
+	std::cout << std::setfill(' ');
+	std::cout << "|" << static_cast<int>(ReadFrom::File) << " - " << std::left << std::setw(maxWidth-4);
 	if (option == Option::A) 
 	{
-		std::cout 
-			<< "| " << static_cast<int>(ReadFrom::File) << " - Ler 2 arquivos com grafos, separados por espaço |\n"
-		    << "| Ex. grafo1.g grafo2.g |\n";
+		std::cout << "Ler 2 arquivos com grafos, separados por espaco. Ex. grafo1.g grafo2.g" << "|\n";
 	}
 	else
 	{
-		std::cout << "| " << static_cast<int>(ReadFrom::File) << " - Ler arquivo com grafo Ex. grafo.g |\n";
+		std::cout << "Ler arquivo com grafo Ex. grafo.g" << "|\n";
 	}
 
-	std::cout
-		<< "| " << static_cast<int>(ReadFrom::Console) << " - Inserir dados no console |\n"
-		<< "|-----------------------------------------------------|\n"
+	std::cout << "|" << static_cast<int>(ReadFrom::Console) << " - " << std::left << std::setw(maxWidth-4) << "Inserir dados no console" << "|\n"
+			  << "|" << std::right << std::setfill('-') << std::setw(maxWidth) << "" << "|\n"
 	;
 }
 
