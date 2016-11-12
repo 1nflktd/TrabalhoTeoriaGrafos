@@ -1,5 +1,7 @@
 #include <iostream>
 #include <memory>
+#include <iomanip>
+#include <map>
 
 #include "Program.hpp"
 #include "Functions.hpp"
@@ -26,14 +28,21 @@ void Program::run()
 
 void Program::showInitialMenu() const
 {
+	const int maxWidth = 100;
+	const std::map<Option, std::string> descriptionOption {
+		{ Option::A , "Identificacao de isomorfismo entre dois grafos" },
+		{ Option::B , "Busca em amplitude e profundidade" },
+		{ Option::Quit , "Sair" }
+	};
 	std::cout 
-		<< "|-----------------------------------------------------|\n"
-		<< "|               Trabalho de grafos                    |\n"
-		<< "|-----------------------------------------------------|\n"
-		<< "|" << static_cast<char>(Option::A) << "- Identificação de isomorfismo entre dois grafos |\n"
-		<< "|" << static_cast<char>(Option::B) << "- Busca em amplitude e profundidade |\n"
-		<< "|" << static_cast<char>(Option::Quit) << "- Sair |\n"
-		<< "|-----------------------------------------------------|\n"
+		<< "|" << std::setfill('-') << std::setw(maxWidth) << "" << "|\n"
+		<< "|" << std::left << std::setfill(' ') << std::setw(maxWidth) << "Trabalho de grafos" << "|\n"
+		<< "|" << std::right << std::setfill('-') << std::setw(maxWidth) << "" << "|\n";
+	std::cout << std::setfill(' ');
+	for (const auto & option : descriptionOption)
+	    std::cout << "|" << static_cast<char>(option.first) << " - " << std::left << std::setw(maxWidth-4) << option.second << "|\n";
+	std::cout 
+		<< "|" << std::right << std::setfill('-') << std::setw(maxWidth) << "" << "|\n"
 	;
 }
 
@@ -190,7 +199,22 @@ void Program::runAlgorithm(Option option, const Graph & graph1)
 			}
 			break;
 		case Option::C:
+			{
+				algorithms::ConnectedComponents connectedComponents{graph1};
+				connectedComponents.run();
+
+				std::cout << "Resultado componentes conexas\n";
+				connectedComponents.showResults();
+			}
+			break;
 		case Option::D:
+			{
+				algorithms::BiconnectedComponents biconnectedComponents{graph1};
+				biconnectedComponents.run();
+
+				std::cout << "Resultado componentes biconexas\n";
+				biconnectedComponents.showResults();
+			}
 		case Option::E:
 		case Option::F:
 		case Option::G:
