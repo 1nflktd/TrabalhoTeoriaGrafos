@@ -1,0 +1,4 @@
+namespace functions
+{
+	void readInputClear();
+}

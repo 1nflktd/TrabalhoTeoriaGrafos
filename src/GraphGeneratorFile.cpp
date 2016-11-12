@@ -7,6 +7,11 @@
 void GraphGeneratorFile::read()
 {
 	std::ifstream infile{this->file};
+	if (!infile)
+	{
+		throw std::runtime_error("Não foi possível abrir o arquivo\n");
+	}
+
 	char valued;
 	int vertices;
 	infile >> valued >> vertices;

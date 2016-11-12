@@ -1,10 +1,17 @@
 #include <iostream>
+#include <memory>
 
 #include "Program.hpp"
+#include "Functions.hpp"
 #include "GraphGeneratorFile.hpp"
+#include "GraphGeneratorConsole.hpp"
+
 #include "algorithms/Algorithm.hpp"
 #include "algorithms/Isomorphism.hpp"
-//#include "GraphGeneratorConsole.hpp"
+#include "algorithms/BFS.hpp"
+#include "algorithms/DFS.hpp"
+#include "algorithms/BiconnectedComponents.hpp"
+#include "algorithms/ConnectedComponents.hpp"
 
 void Program::run()
 {
@@ -14,6 +21,7 @@ void Program::run()
 		this->showInitialMenu();
 		exit = this->processDataInitialMenu();
 	}
+	std::cout << "Programa encerrado\n";
 }
 
 void Program::showInitialMenu() const
@@ -31,43 +39,28 @@ void Program::showInitialMenu() const
 
 bool Program::processDataInitialMenu()
 {
-	bool exit = false;
 	char option;
-	std::cin >> option;
-	if (option >= static_cast<char>(Option::A) && option <= static_cast<char>(Option::H))
-	{
-		this->runInner(static_cast<Option>(option));
-	}
-	else if (option == static_cast<char>(Option::Quit))
-	{
-		exit = true;
-		std::cout << "Programa encerrado!\n";
-	}
-	else 
-	{
-		std::cout << "Opção inválida! Digite novamente.\n";
-	}
-	return exit;
+	while (!(std::cin >> option) || 
+		   !(((option >= static_cast<char>(Option::A) && option <= static_cast<char>(Option::H)) || option == static_cast<char>(Option::Quit))))
+		functions::readInputClear();
+
+	if (option == static_cast<char>(Option::Quit))
+		return true;
+
+	this->runInner(static_cast<Option>(option));
+
+	return false;
 }
 
 void Program::runInner(Option option)
 {
-	bool exit = false;
-	while (!exit)
-	{
-		this->showInnerMenu(option);
-		int optionInner;
-		std::cin >> optionInner;
-		if (optionInner == 1 || optionInner == 2)
-		{
-			this->processDataInnerMenu(option, static_cast<ReadFrom>(optionInner));
-		}
-		else
-		{
-			std::cout << "Opção inválida! Digite novamente." << std::endl;
-			exit = true;
-		}
-	}
+	this->showInnerMenu(option);
+
+	int optionInner;
+	while (!(std::cin >> optionInner) || (static_cast<ReadFrom>(optionInner) != ReadFrom::File && static_cast<ReadFrom>(optionInner) != ReadFrom::Console))
+		functions::readInputClear();
+
+	this->processDataInnerMenu(option, static_cast<ReadFrom>(optionInner));
 }
 
 void Program::showInnerMenu(Option option) const
@@ -94,32 +87,116 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 {
 	if (optionInner == ReadFrom::File)
 	{
-		std::string fileGraph1;
-		if (option == Option::A) 
-		{
-			std::string fileGraph2;
-			std::cin >> fileGraph1 >> fileGraph2;
-
-			GraphGeneratorFile graphGenerator1{fileGraph1};
-			Graph graph1{graphGenerator1.getGraph()};
-			
-			GraphGeneratorFile graphGenerator2{fileGraph2};
-			Graph graph2{graphGenerator2.getGraph()};
-
-			algorithms::Isomorphism algorithm{graph1, graph2};
-		}
-		else
-		{
-			std::cin >> fileGraph1;
-			GraphGeneratorFile graphGenerator1{fileGraph1};
-		}
+		this->processDataFromFile(option);
 	}
 	else if (optionInner == ReadFrom::Console)
 	{
-
+		this->processDataFromConsole(option);
 	}
 	else
 	{
 		std::cout << "Opção inválida.\n";
+	}
+}
+
+void Program::processDataFromFile(Option option)
+{
+	std::string fileGraph1;
+	if (option == Option::A) 
+	{
+		std::string fileGraph2;
+		while ((std::cout << "Digite o arquivo dos dois grafo (ie. grafo1.g grafo2.g): ") && !(std::cin >> fileGraph1 >> fileGraph2))
+			functions::readInputClear();
+
+		try
+		{
+			GraphGeneratorFile graphGenerator1{fileGraph1};
+			GraphGeneratorFile graphGenerator2{fileGraph2};
+			this->runAlgorithm(option, graphGenerator1.getGraph(), graphGenerator2.getGraph());
+		}
+		catch (const std::runtime_error & e)
+		{
+			std::cout << e.what() << "\n";
+		}
+	}
+	else
+	{
+		while ((std::cout << "Digite o nome do arquivo do grafo (ie. grafo1.g): ") && !(std::cin >> fileGraph1))
+			functions::readInputClear();
+
+		try
+		{
+			GraphGeneratorFile graphGenerator1{fileGraph1};
+			this->runAlgorithm(option, graphGenerator1.getGraph());
+		}
+		catch (const std::runtime_error & e)
+		{
+			std::cout << e.what() << "\n";
+		}
+	}
+}
+
+void Program::processDataFromConsole(Option option)
+{
+	if (option == Option::A) 
+	{
+		GraphGeneratorConsole graphGenerator1{};
+		GraphGeneratorConsole graphGenerator2{};
+
+		this->runAlgorithm(option, graphGenerator1.getGraph(), graphGenerator2.getGraph());
+	}
+	else
+	{
+		GraphGeneratorConsole graphGenerator1{};
+		
+		this->runAlgorithm(option, graphGenerator1.getGraph());
+	}
+}
+
+void Program::runAlgorithm(Option option, const Graph & graph1, const Graph & graph2)
+{
+	if (option == Option::A)
+	{
+		algorithms::Isomorphism isomorphism{graph1, graph2};
+		isomorphism.run();
+		std::cout << "Resultado isomorfismo\n";
+		isomorphism.showResults();
+	}
+}
+
+void Program::runAlgorithm(Option option, const Graph & graph1)
+{
+	switch (option)
+	{
+		case Option::B:
+			{
+				int initialVertex;
+				while (((std::cout << "Digite o vértice inicial: ") && !(std::cin >> initialVertex)) || initialVertex < 1)
+					functions::readInputClear();
+
+				--initialVertex;  // zero based
+
+				algorithms::BFS bfs{graph1, initialVertex};
+				bfs.run();
+				
+				std::cout << "Resultado bfs\n";
+				bfs.showResults();
+
+				algorithms::DFS dfs{graph1, initialVertex};
+				dfs.run();
+
+				std::cout << "Resultado dfs\n";
+				dfs.showResults();
+			}
+			break;
+		case Option::C:
+		case Option::D:
+		case Option::E:
+		case Option::F:
+		case Option::G:
+		case Option::H:
+		case Option::A: // do nothing
+		case Option::Quit: // do nothing
+			break;
 	}
 }

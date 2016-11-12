@@ -1,14 +1,7 @@
 #include <iostream>
-#include <limits>
 
 #include "GraphGeneratorConsole.hpp"
-
-void readInputClear()
-{
-	std::cin.clear(); //clear bad input flag
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //discard input
-	std::cout << "Input inválido. Escreva novamente.\n";
-}
+#include "Functions.hpp"
 
 void GraphGeneratorConsole::read()
 {
@@ -17,10 +10,10 @@ void GraphGeneratorConsole::read()
 		
 	//executes loop if the input fails (e.g., no characters were read)
 	while (((std::cout << "V para valorado e N para nao valorado: ") && !(std::cin >> valued)) || (valued != 'V' && valued != 'N'))
-		readInputClear();
+		functions::readInputClear();
 
 	while (((std::cout << "Numero de vertices: ") && !(std::cin >> vertices)) || (vertices <= 0))
-		readInputClear();
+		functions::readInputClear();
 
 	this->graph.initialize(vertices, valued == 'V', true);
 

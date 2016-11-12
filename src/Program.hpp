@@ -1,6 +1,8 @@
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
 
+#include "Graph.hpp"
+
 enum class Option
 {
 	A = 'a', B, C, D, E, F, G, H, Quit = 'q'
@@ -17,7 +19,11 @@ class Program
 	bool processDataInitialMenu();
 	void showInnerMenu(Option) const;
 	void processDataInnerMenu(Option, ReadFrom);
+	void processDataFromFile(Option);
+	void processDataFromConsole(Option);
 	void runInner(Option);
+	void runAlgorithm(Option, const Graph &, const Graph &);
+	void runAlgorithm(Option, const Graph &);
 public:
 	Program() {}
 	void run();
