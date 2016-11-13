@@ -1,12 +1,15 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 
 #include "GraphGeneratorFile.hpp"
 
 void GraphGeneratorFile::read()
 {
-	std::ifstream infile{this->file};
+	std::ifstream infile{this->file, std::ios::binary};
+
 	if (!infile)
 	{
 		throw std::runtime_error("Não foi possível abrir o arquivo\n");
@@ -20,9 +23,13 @@ void GraphGeneratorFile::read()
 
 	int vertex = 0;
 	std::string line;
-	while(std::getline(infile, line))
+	while (std::getline(infile, line))
 	{
-		if (line.empty()) continue;
+		if (std::all_of(line.begin(), line.end(), [](char c) {
+				return std::isspace(static_cast<unsigned char>(c));
+			})
+		) continue;
+
 		std::istringstream iss(line);
 		int n_adjacentVertices;
 		iss >> n_adjacentVertices;
