@@ -180,7 +180,7 @@ void Program::runAlgorithm(Option option, const Graph & graph1)
 		case Option::B:
 			{
 				int initialVertex;
-				while (((std::cout << "Digite o vértice inicial: ") && !(std::cin >> initialVertex)) || initialVertex < 1)
+				while (((std::cout << "Digite o vertice inicial: ") && !(std::cin >> initialVertex)) || initialVertex < 1)
 					functions::readInputClear();
 
 				--initialVertex;  // zero based

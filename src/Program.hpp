@@ -13,7 +13,7 @@ enum class ReadFrom
 	File = 1, Console
 };
 
-const int maxWidth = 100;
+const int maxWidth = 60;
 
 class Program
 {
