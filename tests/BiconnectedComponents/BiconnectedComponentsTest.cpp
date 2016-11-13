@@ -2,17 +2,30 @@
 #include "../../src/algorithms/BiconnectedComponents.hpp"
 #include "../../src/GraphGeneratorFile.hpp"
 
-int main()
+int main(int argc, char * argv[])
 {
-	GraphGeneratorFile g1{"graph1.g"};
+	if (argc != 2)
+	{
+		std::cout << "insira o nome do grafo\n";
+		return 0;
+	}
 
-	std::cout << "graph1\n";
-	g1.getGraph().printGraphMatrix();
+	try
+	{
+		GraphGeneratorFile g1{argv[1]};
 
-	algorithms::BiconnectedComponents biconnectedComponents{g1.getGraph()};
+		std::cout << "graph1\n";
+		g1.getGraph().printGraphMatrix();
 
-	biconnectedComponents.run();
-	biconnectedComponents.showResults();
+		algorithms::BiconnectedComponents biconnectedComponents{g1.getGraph()};
 
+		biconnectedComponents.run();
+		biconnectedComponents.showResults();
+	}
+	catch (const std::runtime_error & e)
+	{
+		std::cout << e.what() << "\n";		
+	}
+	
 	return 0;
 }

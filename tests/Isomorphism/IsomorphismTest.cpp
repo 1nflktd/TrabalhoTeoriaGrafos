@@ -2,10 +2,16 @@
 #include "../../src/algorithms/Isomorphism.hpp"
 #include "../../src/GraphGeneratorFile.hpp"
 
-int main()
+int main(int argc, char * argv[])
 {
-	GraphGeneratorFile g1{"graph1.g"};
-	GraphGeneratorFile g2{"graph2.g"};
+	if (argc != 3)
+	{
+		std::cout << "insira o nome dos grafos como parametros\n";
+		return 0;
+	}
+
+	GraphGeneratorFile g1{argv[1]};
+	GraphGeneratorFile g2{argv[2]};
 
 	std::cout << "graph1\n";
 	g1.getGraph().printGraphMatrix();
