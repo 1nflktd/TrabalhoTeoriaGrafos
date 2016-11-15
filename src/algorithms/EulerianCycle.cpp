@@ -40,10 +40,11 @@ void algorithms::EulerianCycle::run()
 	{
 		int v = stack.top();
 		stack.pop();
+
 		while (adj[v] != adjacencyList[v].end())
 		{
 			stack.push(v);
-			v = *(++adj[v]);
+			v = *adj[v]++;
 		}
 
 		cycle.push(v);
@@ -56,7 +57,10 @@ void algorithms::EulerianCycle::run()
 		{
 			int v = cycle.top();
 			cycle.pop();
-			this->result += (v + 1) + " "; // vertices from 1
+
+			std::stringstream stream;
+			stream << (v + 1) << " ";
+			this->result += stream.str(); // vertices from 1
 		}
 		this->result += "\n";
 	}
