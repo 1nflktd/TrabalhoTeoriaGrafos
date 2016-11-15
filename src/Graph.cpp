@@ -6,6 +6,10 @@
 void Graph::initialize(int _vertices, int _valued, int _directed)
 {
 	this->vertices = _vertices;
+	this->edges = 0;
+	this->degree = VecInt(_vertices, 0);
+	this->indegree = VecInt(_vertices, 0);
+	this->outdegree = VecInt(_vertices, 0);
 	this->valued = _valued;
 	this->directed = _directed;
 	this->matrix = Matrix(_vertices, std::vector<int>(_vertices, -1)); // initial vertex is 1, not 0...
@@ -28,10 +32,19 @@ void Graph::addEdge(int vertex, int adjacentVertex, int weight)
 	}
 	this->matrix[vertex][adjacentVertex] = weight;
 	this->adjacencyList[vertex].push_back(adjacentVertex);
+	++this->edges;
+	++this->degree[vertex];
+	++this->outdegree[vertex];
+	++this->indegree[adjacentVertex];
+
 	if (!this->directed)
 	{
 		this->matrix[adjacentVertex][vertex] = weight;
 		this->adjacencyList[adjacentVertex].push_back(vertex);
+		++this->edges;
+		++this->degree[adjacentVertex];
+		++this->outdegree[adjacentVertex];
+		++this->indegree[vertex];
 	}
 }
 
@@ -69,4 +82,15 @@ void Graph::addBiconnectedComponent(int biconnectedComponent, const std::pair<in
 	}
 
 	this->biconnectedComponents[biconnectedComponent].push_back(edge);
+}
+
+int Graph::getNonIsolatedVertex() const
+{
+	// for directed graphs
+	for (int v = 0; v < this->getVertices(); ++v)
+	{
+		if (this->getOutdegree(v) > 0)
+			return v;
+	}
+	return -1;
 }
