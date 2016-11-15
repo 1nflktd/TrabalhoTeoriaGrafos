@@ -21,8 +21,9 @@ void algorithms::BFS::BFSinit()
 	{
 		return; // throw exception
 	}
+
 	std::vector<int> vLevel(this->graph.getVertices(), -1);
-	vLevel[this->initialVertex] = 0;
+	vLevel[this->initialVertex] = 1;
 
 	std::queue<int> queue;
 	queue.push(this->initialVertex);

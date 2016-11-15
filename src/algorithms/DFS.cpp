@@ -17,30 +17,29 @@ void algorithms::DFS::showResults()
 
 void algorithms::DFS::DFSinit()
 {
-	std::vector<int> visited(this->graph.getVertices(), -1);
-	std::vector<int> low(this->graph.getVertices(), -1);
-	std::vector<int> parent(this->graph.getVertices(), -1);
+	if (this->initialVertex < 0 || this->initialVertex >= this->graph.getVertices()) 
+	{
+		return; // throw exception
+	}
+
+	VecInt visited(this->graph.getVertices(), -1);
+	VecInt low(this->graph.getVertices(), -1);
+	VecInt parent(this->graph.getVertices(), -1);
 	std::list<std::pair<int, int>> stack; // edges
+	
 	int time = 0;
 	int nConnectedComponents = 0;
 	int nBiconnectedComponents = 0;
 
+	// doVisit for initialVertex
+	this->doVisit(this->initialVertex, visited, time, nConnectedComponents, low, parent, stack, nBiconnectedComponents);
+
 	for (int u = 0, count = this->graph.getVertices(); u < count; ++u)
 	{
-		if (visited[u] == -1)
+		if (u != this->initialVertex)
 		{
-			this->DFSvisit(u, visited, time, nConnectedComponents++, low, parent, stack, nBiconnectedComponents);
+			this->doVisit(u, visited, time, nConnectedComponents, low, parent, stack, nBiconnectedComponents);
 		}
-
-		bool addBiconnectedComponent = false;
-		//If stack is not empty, pop all edges from stack
-		while (!stack.empty())
-		{
-			addBiconnectedComponent = true;
-			this->graph.addBiconnectedComponent(nBiconnectedComponents, stack.back());
-			stack.pop_back();
-		}
-		if (addBiconnectedComponent) ++nBiconnectedComponents;
 	}
 
 	this->graph.setNConnectedComponents(nConnectedComponents);
@@ -54,7 +53,25 @@ void algorithms::DFS::DFSinit()
 	}
 }
 
-void algorithms::DFS::DFSvisit(int u, std::vector<int> & visited, int & time, int nConnectedComponents, std::vector<int> & low, std::vector<int> & parent, std::list<std::pair<int, int>> & stack, int & nBiconnectedComponents)
+void algorithms::DFS::doVisit(int u, VecInt & visited, int & time, int & nConnectedComponents, VecInt & low, VecInt & parent, std::list<std::pair<int, int>> & stack, int & nBiconnectedComponents)
+{
+	if (visited[u] == -1)
+	{
+		this->DFSvisit(u, visited, time, nConnectedComponents++, low, parent, stack, nBiconnectedComponents);
+	}
+
+	bool addBiconnectedComponent = false;
+	//If stack is not empty, pop all edges from stack
+	while (!stack.empty())
+	{
+		addBiconnectedComponent = true;
+		this->graph.addBiconnectedComponent(nBiconnectedComponents, stack.back());
+		stack.pop_back();
+	}
+	if (addBiconnectedComponent) ++nBiconnectedComponents;
+}
+
+void algorithms::DFS::DFSvisit(int u, VecInt & visited, int & time, int nConnectedComponents, VecInt & low, VecInt & parent, std::list<std::pair<int, int>> & stack, int & nBiconnectedComponents)
 {
 	low[u] = visited[u] = ++time;
 	int children = 0;
