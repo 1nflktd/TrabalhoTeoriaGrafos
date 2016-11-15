@@ -42,7 +42,7 @@ void algorithms::Isomorphism::generateAllPermutations()
 
     if (!found)
     {
-    	this->result += "Grafos não são isomorfos.\n";
+    	this->result += "Grafos nao sao isomorfos.\n";
     }
 }
 

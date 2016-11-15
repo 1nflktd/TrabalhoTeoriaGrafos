@@ -104,7 +104,7 @@ void Program::processDataInnerMenu(Option option, ReadFrom optionInner)
 	}
 	else
 	{
-		std::cout << "Opção inválida.\n";
+		std::cout << "Opcao inválida.\n";
 	}
 }
 

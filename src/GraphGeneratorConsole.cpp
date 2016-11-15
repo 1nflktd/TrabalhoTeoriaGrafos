@@ -19,9 +19,9 @@ void GraphGeneratorConsole::read()
 
 	std::cout << "Cada linha e um vertice, na ordem. Ex: linha 1, vertice 1, etc.\n";
 	if (this->graph.getValued())
-		std::cout << "Digite o número de vertices adjacentes junto com cada vertice e o peso da aresta.\nEx: 2 1 2 2 3, dois vertices, vertice 1, aresta peso 2, e vertice 2, aresta peso 3.\n";
+		std::cout << "Digite o numero de vertices adjacentes junto com cada vertice e o peso da aresta.\nEx: 2 1 2 2 3, dois vertices, vertice 1, aresta peso 2, e vertice 2, aresta peso 3.\n";
 	else
-		std::cout << "Digite o número de vertices adjacentes junto com cada vertice.\nEx: 2 1 2, dois vertices, 1 e 2.\n";
+		std::cout << "Digite o numero de vertices adjacentes junto com cada vertice.\nEx: 2 1 2, dois vertices, 1 e 2.\n";
 
 	for (int vertex = 0; vertex < vertices; ++vertex)
 	{

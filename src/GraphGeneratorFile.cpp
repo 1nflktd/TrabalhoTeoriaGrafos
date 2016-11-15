@@ -12,7 +12,7 @@ void GraphGeneratorFile::read()
 
 	if (!infile)
 	{
-		throw std::runtime_error("Não foi possível abrir o arquivo\n");
+		throw std::runtime_error("Nao foi possível abrir o arquivo\n");
 	}
 
 	char valued;
