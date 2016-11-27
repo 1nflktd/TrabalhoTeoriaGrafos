@@ -9,6 +9,8 @@ using ListInt = std::list<int>;
 using Matrix = std::vector<VecInt>;
 using AdjacencyList = std::vector<ListInt>;
 using Edges = std::vector<std::list<std::pair<int, int>>>;
+using MatrixList = std::vector<AdjacencyList>;
+using PairList = std::pair<int, std::list<int>>;
 
 class Graph
 {

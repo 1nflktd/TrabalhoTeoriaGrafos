@@ -7,6 +7,7 @@ namespace algorithms
 {
 	class HamiltonianCycle : public Algorithm
 	{
+	PairList hamCycle(int, int, Matrix &, MatrixList &); // C mapa de bits
 	public:
 		HamiltonianCycle(const Graph & _graph1) : Algorithm(_graph1) {}
 		virtual void run();
