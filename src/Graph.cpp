@@ -84,12 +84,21 @@ void Graph::addBiconnectedComponent(int biconnectedComponent, const std::pair<in
 	this->biconnectedComponents[biconnectedComponent].push_back(edge);
 }
 
-int Graph::getNonIsolatedVertex() const
+int Graph::getNonIsolatedVertexDirected() const
 {
-	// for directed graphs
 	for (int v = 0; v < this->getVertices(); ++v)
 	{
 		if (this->getOutdegree(v) > 0)
+			return v;
+	}
+	return -1;
+}
+
+int Graph::getNonIsolatedVertexUndirected() const
+{
+	for (int v = 0; v < this->getVertices(); ++v)
+	{
+		if (this->getDegree(v) > 0)
 			return v;
 	}
 	return -1;

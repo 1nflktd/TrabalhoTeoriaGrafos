@@ -58,7 +58,8 @@ public:
 	inline std::list<std::pair<int, int>> getBiconnectedComponents(int v) const { return this->biconnectedComponents[v]; }
 
 	void printGraphMatrix();
-	int getNonIsolatedVertex() const;
+	int getNonIsolatedVertexDirected() const;
+	int getNonIsolatedVertexUndirected() const;
 };
 
 #endif
