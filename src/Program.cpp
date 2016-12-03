@@ -14,6 +14,10 @@
 #include "algorithms/DFS.hpp"
 #include "algorithms/BiconnectedComponents.hpp"
 #include "algorithms/ConnectedComponents.hpp"
+#include "algorithms/EulerianCycle.hpp"
+#include "algorithms/HamiltonianCycle.hpp"
+#include "algorithms/MinimumSpanningTree.hpp"
+#include "algorithms/FordFulkerson.hpp"
 
 void Program::run()
 {
@@ -33,6 +37,10 @@ void Program::showInitialMenu() const
 		{ Option::B , "Busca em amplitude e profundidade" },
 		{ Option::C , "Componentes conexas" },
 		{ Option::D , "Componentes biconexas" },
+		{ Option::E , "Ciclo euleriano" },
+		{ Option::F , "Ciclo hamiltoniano" },
+		{ Option::G , "Arvore geradora minima" },
+		{ Option::H , "Fluxo maximo" },
 		{ Option::Quit , "Sair" }
 	};
 	std::cout 
@@ -216,9 +224,52 @@ void Program::runAlgorithm(Option option, const Graph & graph1)
 				biconnectedComponents.showResults();
 			}
 		case Option::E:
+			{
+				algorithms::EulerianCycle eulerianCycle{graph1};
+				eulerianCycle.run();
+
+				std::cout << "Resultado ciclo euleriano\n";
+				eulerianCycle.showResults();
+			}
+			break;
 		case Option::F:
+			{
+				algorithms::HamiltonianCycle hamiltonianCycle{graph1};
+				hamiltonianCycle.run();
+
+				std::cout << "Resultado ciclo hamiltoniano\n";
+				hamiltonianCycle.showResults();
+			}
+			break;
 		case Option::G:
+			{
+				algorithms::MinimumSpanningTree mst{graph1};
+				mst.run();
+
+				std::cout << "Resultado arvore geradora minima\n";
+				mst.showResults();
+			}
+			break;
 		case Option::H:
+			{
+				int source;
+				while (((std::cout << "Digite o vertice fonte: ") && !(std::cin >> source)) || source < 1)
+					functions::readInputClear();
+
+				int target;
+				while (((std::cout << "Digite o vertice destino: ") && !(std::cin >> target)) || target < 1)
+					functions::readInputClear();
+
+				--source;  // zero based
+				--target;  // zero based
+
+				algorithms::FordFulkerson fordFulkerson{graph1, source, target};
+				fordFulkerson.run();
+				
+				std::cout << "Resultado fordFulkerson\n";
+				fordFulkerson.showResults();
+			}
+			break;
 		case Option::A: // do nothing
 		case Option::Quit: // do nothing
 			break;
