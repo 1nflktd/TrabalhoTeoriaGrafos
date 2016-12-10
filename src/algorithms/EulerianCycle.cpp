@@ -34,8 +34,7 @@ void algorithms::EulerianCycle::run()
 	}
 
 	std::stack<int> cycle = directed ? this->getEulerianCycleDirected() : this->getEulerianCycleUndirected();
-
-	int nEdges = directed ? this->graph.getEdges() : this->graph.getEdges()/2;
+	int nEdges = this->graph.getEdges();
 
 	if (static_cast<int>(cycle.size()) == nEdges + 1)
 	{
@@ -97,20 +96,9 @@ std::stack<int> algorithms::EulerianCycle::getEulerianCycleUndirected()
 
 	for (int v = 0; v < size; ++v)
 	{
-		int selfLoops = 0;
 		for (const auto & w : this->graph.getAdjacencyList(v))
 		{
-			if (v == w)
-			{
-				if (selfLoops % 2 == 0)
-				{
-					auto e = std::make_shared<Edge>(v, w);
-					adj[v].push_back(e);
-					adj[w].push_back(e);
-				}
-				++selfLoops;
-			}
-			else if (v < w)
+			if (v != w)
 			{
 				auto e = std::make_shared<Edge>(v, w);
 				adj[v].push_back(e);
@@ -131,8 +119,8 @@ std::stack<int> algorithms::EulerianCycle::getEulerianCycleUndirected()
 		stack.pop();
 		while (!adj[v].empty())
 		{
-			auto edge = adj[v].back();
-			adj[v].pop_back();
+			auto edge = adj[v].front();
+			adj[v].pop_front();
 			if (edge->isUsed) continue;
 			edge->isUsed = true;
 			stack.push(v);

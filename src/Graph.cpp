@@ -34,6 +34,7 @@ void Graph::addEdge(int vertex, int adjacentVertex, int weight)
 	this->adjacencyList[vertex].push_back(adjacentVertex);
 	++this->edges;
 	++this->degree[vertex];
+	++this->degree[adjacentVertex]; // only used in eulerian cycle, this should be below, only if not directed, but....
 	++this->outdegree[vertex];
 	++this->indegree[adjacentVertex];
 
@@ -42,7 +43,7 @@ void Graph::addEdge(int vertex, int adjacentVertex, int weight)
 		this->matrix[adjacentVertex][vertex] = weight;
 		this->adjacencyList[adjacentVertex].push_back(vertex);
 		++this->edges;
-		++this->degree[adjacentVertex];
+		//++this->degree[adjacentVertex];
 		++this->outdegree[adjacentVertex];
 		++this->indegree[vertex];
 	}
