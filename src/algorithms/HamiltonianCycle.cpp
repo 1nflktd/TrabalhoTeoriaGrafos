@@ -25,7 +25,7 @@ void algorithms::HamiltonianCycle::run()
 		{
 			stream << (v + 1) << " ";
 		}
-		stream << path[0] << "\n";
+		stream << (path[0] + 1) << "\n";
 	}
 
 	this->result += stream.str();
