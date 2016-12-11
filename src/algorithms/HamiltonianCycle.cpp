@@ -1,77 +1,73 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include <utility>
-#include <list>
-#include <cmath>
-#include <limits>
+#include <algorithm>
 
 #include "DFS.hpp"
 #include "HamiltonianCycle.hpp"
 
 void algorithms::HamiltonianCycle::run()
 {
-	Matrix table(this->graph.getVertices(), VecInt(std::pow(2, this->graph.getVertices()), -1));
-	MatrixList tableList(this->graph.getVertices(), AdjacencyList(std::pow(2, this->graph.getVertices())));
+	VecInt path(this->graph.getVertices(), -1);
 
-	int C = std::pow(2, this->graph.getVertices()) - 1; // all bits high
-
-	PairList ret = this->hamCycle(0, C, table, tableList);
+	path[0] = 0; // start with 0
 
 	std::stringstream stream;
-	stream << "Custo total:\n" << ret.first << "\n";
 
-	stream << "Ciclo: \n";
-	for (const auto & x : ret.second)
+	if (!this->hamCycle(path, 1)) 
 	{
-		stream << (x + 1) << " ";
+		stream << "Nao ha ciclo hamiltoniano.\n";	
 	}
-	stream << "\n";
+	else
+	{
+		stream << "Ciclo hamiltoniano:\n";
+		for (const auto & v : path)
+		{
+			stream << v << " ";
+		}
+		stream << path[0] << "\n";
+	}
 
 	this->result += stream.str();
 }
 
-PairList algorithms::HamiltonianCycle::hamCycle(int i, int C, Matrix & table, MatrixList & tableList) // C mapa de bits
+bool algorithms::HamiltonianCycle::canAccess(int v, const VecInt & path, int pos)
 {
-	std::list<int> listVertices;
+	// check if there is an adjacent vertex
+	if (this->graph(path[pos-1], v) == -1)
+		return false;
 
-	if (table[i][C] != -1)
+	// check if already included
+	if (std::find(path.begin(), path.end(), v) != path.end())
+		return false;
+
+	return true;
+}
+
+bool algorithms::HamiltonianCycle::hamCycle(VecInt & path, int pos)
+{
+	int vertices = this->graph.getVertices();
+	if (vertices == pos) // all vertices included
 	{
-		return std::make_pair(table[i][C], tableList[i][C]);
+		if (this->graph(path[pos-1], path[0]) == -1)
+			return false;
+		return true;
 	}
 
-	if (C == 0) 
+	for (int v = 1; v < vertices; ++v)
 	{
-		listVertices.push_back(0);
-		table[i][C] = this->graph(i, 0) == -1 ? 0 : this->graph(i, 0);
-		tableList[i][C] = listVertices;
-
-		return std::make_pair(this->graph(i, 0), tableList[i][C]);
-	}
-
-	int size = this->graph.getVertices();
-	int min = std::numeric_limits<int>::max();
-
-	for (int j = 0; j < size; ++j)
-	{
-		if (C & (1 << j))
+		if (this->canAccess(v, path, pos))
 		{
-			PairList ret = this->hamCycle(j, C & (~(1 << j)), table, tableList);  // take j out of C
-			int w = this->graph(i, j) == -1 ? 0 : this->graph(i, j);
-			int aux = w + ret.first;
-			if (aux < min) 
-			{
-				min = aux;
-				listVertices = ret.second;
-				listVertices.push_back(j);
-			}
+			path[pos] = v;
+
+			if (this->hamCycle(path, pos+1))
+				return true;
+
+			path[pos] = -1;
 		}
 	}
 
-	table[i][C] = min;
-	tableList[i][C] = listVertices;
-
-	return std::make_pair(table[i][C], listVertices);
+	return false;
 }
 
 void algorithms::HamiltonianCycle::showResults()
