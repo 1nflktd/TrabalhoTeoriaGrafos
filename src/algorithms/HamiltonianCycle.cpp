@@ -23,7 +23,7 @@ void algorithms::HamiltonianCycle::run()
 		stream << "Ciclo hamiltoniano:\n";
 		for (const auto & v : path)
 		{
-			stream << v << " ";
+			stream << (v + 1) << " ";
 		}
 		stream << path[0] << "\n";
 	}
