@@ -25,19 +25,20 @@ void algorithms::FordFulkerson::showResults()
 int algorithms::FordFulkerson::fordFulkerson(int source, int target)
 {
 	int u, v;
+	int vertices = this->graph.getVertices();
 
-	Matrix residualGraph(this->graph.getVertices(), VecInt(this->graph.getVertices()));
+	Matrix residualGraph(vertices, VecInt(vertices));
 
 	// init with capacities, or 0, if there aren't edges between vertices
-	for (int u = 0; u < this->graph.getVertices(); ++u)
+	for (int u = 0; u < vertices; ++u)
 	{
-		for (int v = 0; v < this->graph.getVertices(); ++v)
+		for (int v = 0; v < vertices; ++v)
 		{
 			residualGraph[u][v] = this->graph(u, v) > 0 ? this->graph(u, v) : 0;
 		}
 	}
 
-	VecInt parent(this->graph.getVertices());
+	VecInt parent(vertices);
 
 	int maxFlow = 0;
 
